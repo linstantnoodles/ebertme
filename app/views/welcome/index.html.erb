@@ -1,4 +1,19 @@
-<h2>Hello World</h2>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+<h2>Ebert Reviews</h2>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Reviewer</th>
+        <th>Release year</th>
+        <th>Rating</th>
+        <th>URL</th>
+    </tr>
+    <% @reviews.each do |review| %>
+       <tr>
+         <td><%= review[:title] %></td>
+         <td><%= review[:reviewer] %></td>
+         <td><%= review[:release_year] %></td>
+         <td><%= review[:rating] %></td>
+         <td><a href="<%= review[:url] %>" target="_blank"><%= review[:url] %></a></td>
+      </tr>
+    <% end %>
+</table>
