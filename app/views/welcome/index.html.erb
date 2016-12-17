@@ -7,6 +7,7 @@
         <th>Release year</th>
         <th>Rating</th>
         <th>URL</th>
+        <th>Providers</th>
     </tr>
     <% @reviews.each do |review| %>
        <tr>
@@ -15,6 +16,7 @@
          <td><%= review[:release_year] %></td>
          <td><%= review[:rating] %></td>
          <td><a href="<%= review[:url] %>" target="_blank"><%= review[:url] %></a></td>
+         <td><%= review[:providers] %></td>
       </tr>
     <% end %>
 </table>
