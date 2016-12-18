@@ -2,12 +2,10 @@ class WelcomeController < ApplicationController
     helper_method :movie_providers
 
     def index
-        roger_ebert = Critic.includes(reviews: [:movie]).find_by(name: 'Roger Ebert')
-        @reviews = roger_ebert
-            .reviews
-            .where(rating: 4..5)
+        #roger_ebert = Critic.includes(reviews: [:movie]).find_by(name: 'Roger Ebert')
+        @reviews = Review.includes(:movie).where(rating: 4..5)
             .page(params[:page])
-            .per(10)
+            .per(20)
     end
 
     def movie_providers(title)
