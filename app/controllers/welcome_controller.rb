@@ -3,7 +3,11 @@ class WelcomeController < ApplicationController
 
     def index
         roger_ebert = Critic.includes(reviews: [:movie]).find_by(name: 'Roger Ebert')
-        @reviews = roger_ebert.reviews.where(rating: 4..5).limit(10)
+        @reviews = roger_ebert
+            .reviews
+            .where(rating: 4..5)
+            .page(params[:page])
+            .per(10)
     end
 
     def movie_providers(title)
