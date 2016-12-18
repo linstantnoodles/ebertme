@@ -1,22 +1,17 @@
-<h2>Ebert Reviews</h2>
-<img src="http://www.nndb.com/people/230/000024158/ebert.jpg"/>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Reviewer</th>
-        <th>Release year</th>
-        <th>Rating</th>
-        <th>URL</th>
-        <th>Providers</th>
-    </tr>
+<h2>Roger Ebert's Favorite Movies and Where to Watch Them</h2>
+<div id="wrapper">
+    <div id="columns">
     <% @reviews.each do |review| %>
-       <tr>
-         <td><%= review[:title] %></td>
-         <td><%= review[:reviewer] %></td>
-         <td><%= review[:release_year] %></td>
-         <td><%= review[:rating] %></td>
-         <td><a href="<%= review[:url] %>" target="_blank"><%= review[:url] %></a></td>
-         <td><%= review[:providers] %></td>
-      </tr>
+        <div class="pin">
+            <img src="<%= review.movie.poster_img_url %>"/>
+             <p><a href="<%= review.url %>" target="_blank"><%= review.movie.title %> (<%= review.date.strftime('%Y') %>)</a></p>
+             <% providers = movie_providers(review.movie.title) %>
+             <% if providers.empty? %>
+                <p>Not available yet :(</p>
+             <% else %>
+                <p>Available at: <%= providers.join(', ') %></p>
+            <% end %>
+        </div>
     <% end %>
-</table>
+
+</div>
