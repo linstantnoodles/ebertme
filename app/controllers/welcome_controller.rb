@@ -3,14 +3,17 @@ class WelcomeController < ApplicationController
 
     def index
         @providers = Provider.all
-        @review_params = params.fetch(:movie, {}).permit(:provider_id, :title)
+        @review_params = params.fetch(:movie, {}).permit(:provider_id, :title, :sort_method)
+        @sort_method = params[:movie][:sort_method] unless params[:movie].nil? || params[:movie][:sort_method].nil?
         @title = @review_params[:title]
         @provider_id = @review_params[:provider_id]
-        @reviews = Review.search_by_params(@review_params)
+        @reviews = Review.includes(:movie).search_by_params(@review_params)
             .where(rating: 4..5)
-            .distinct
             .page(params[:page])
             .per(10)
+            .order_by(@sort_method)
+            .order('movies.title ASC')
+
         @reviews.each do |review|
             create_movie_providers(review.movie)
         end

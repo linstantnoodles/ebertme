@@ -20,4 +20,10 @@ class Review < ApplicationRecord
             .left_outer_joins(:movie)
             .where("movies.title ILIKE ?", "%#{title}%")
     }
+
+    scope :order_by, -> (sort_method) {
+        return all if sort_method.blank?
+        date_order = (sort_method == 'newest') ? 'date DESC' : 'date ASC'
+        includes(:movie).order("#{date_order}")
+    }
 end

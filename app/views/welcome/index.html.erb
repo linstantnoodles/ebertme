@@ -14,11 +14,18 @@
 </nav>
 <div id="wrapper">
   <%= form_for :movie, url: {action: "index"}, html: {method: "get", class: 'form-inline'} do |f| %>
-    <label for="movie_title">Title</label>
+    <label for="movie_title">Movie title</label>
     <%= f.text_field :title, { id: 'movie_title' , class: 'form-control', value: @title} %>
     <label for="exampleInputName2">Provider</label>
     <%= f.select :provider_id, options_for_select(@providers.collect { |provider|
       [provider.name.titleize, provider.id] }, @provider_id), {:include_blank => 'All'}, { id: 'providers_select' , class: 'form-control'} %>
+      <label for="inlineRadio1">Sort by</label>
+      <label class="radio-inline">
+        <%= f.radio_button :sort_method, "newest", {id: "sort_method_newest", checked: @sort_method == 'newest'} %> Newest first
+      </label>
+      <label class="radio-inline">
+        <%= f.radio_button :sort_method, "oldest", {id: "sort_method_oldest", checked: @sort_method == 'oldest'} %> Oldest first
+      </label>
     <%= f.submit "Search", {class: 'btn btn-default'}%>
   <% end %>
     <div id="columns">
